@@ -18,8 +18,9 @@ function App() {
     setTasks(storedTasks);
 }, []);
 
-const onSaveTask = (newTask) => {
-    let task : Task = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const onSaveTask = (newTask: { id: any; titulo: any; descripcion: any; date: string | number | Date; }) => {
+    const task : Task = {
       id:newTask.id,
       title:newTask.titulo,
       description: newTask.descripcion,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, TextField } from "@mui/material";
 import 'react-datepicker/dist/react-datepicker.css';
 import { STATUS } from '../models/STATUS';
@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { CloseButtonComponent } from './CloseButtonComponent';
 
-export function TaskFormComponent(props : {onSaveTask}) {
+export function TaskFormComponent(props : {onSaveTask: (arg0: { id: string; titulo: string; descripcion: string; date: string; status: STATUS; }) => void}) {
     const [formValues, setFormValues] = useState({
         id:uuid(),
         titulo: '',
@@ -18,17 +18,19 @@ export function TaskFormComponent(props : {onSaveTask}) {
     const [iconClassName, setIconClassName] = useState('open-form-btn');
     const [formClassName, setFormClassName] = useState('notVisible');
 
-    const handleInputChange = (event) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handleInputChange = (event: { target: { name: any; value: any; }; }) => {
         const { name, value } = event.target;
         setFormValues({ ...formValues, [name]: value });
     };
 
-    const handleDateChange = (event) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handleDateChange = (event: { target: { name: any; value: any; }; }) => {
         const { name, value } = event.target;
         setFormValues({ ...formValues, [name]: value });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
         props.onSaveTask(formValues)
         setFormValues({

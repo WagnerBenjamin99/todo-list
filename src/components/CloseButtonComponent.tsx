@@ -1,5 +1,6 @@
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-export function CloseButtonComponent(props:{onClose}){
+import { MouseEventHandler } from 'react';
+export function CloseButtonComponent(props:{onClose: MouseEventHandler<HTMLButtonElement> | undefined}){
 
 
     return <button type='reset' className="close-btn" onClick={props.onClose}> 
