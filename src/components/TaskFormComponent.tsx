@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Button, TextField } from "@mui/material";
-import 'react-datepicker/dist/react-datepicker.css';
 import { STATUS } from '../models/STATUS';
 import { v4 as uuid } from 'uuid';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
