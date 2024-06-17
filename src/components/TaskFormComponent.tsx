@@ -24,8 +24,8 @@ export function TaskFormComponent(props : {onSaveTask: (arg0: { id: string; titu
         setFormValues({ ...formValues, [name]: value });
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handleDateChange = (event: { target: { name: any; value: any; }; }) => {
+   
+    const handleDateChange = (event: { target: { name: string; value: string; }; }) => {
         const { name, value } = event.target;
         setFormValues({ ...formValues, [name]: value });
     };

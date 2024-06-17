@@ -11,8 +11,8 @@ import { DeleteRounded } from "@mui/icons-material";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 
-//export function CardComponent(props: { name: string; description: string; isFinished: boolean; dateLimit: string }){
-export function TaskComponent(props: { task : Task, taskId:string, onDelete, onPlay}){ 
+
+export function TaskComponent(props: { task : Task, taskId:string, onDelete:(id:string)=>void, onPlay:(id:string)=>void}){ 
    
     
 

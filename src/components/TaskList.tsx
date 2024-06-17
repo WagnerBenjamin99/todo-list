@@ -1,49 +1,13 @@
 
-import { useEffect, useState } from "react";
 import { Task } from "../models/task";
 import { TaskComponent } from "../TaskComponent";
 import {STATUS} from '../models/STATUS'
 
-export function TaskList( props: {status:string, tasks:Task[], setTasks }){
+export function TaskList( props: {status:string, tasks:Task[], setTasks:(tasks:Task[])=>void }){
 
 
-    const {status, tasks, setTasks} = props
-    const task1 : Task ={
-  
-        title:'Estudiar',
-        description:'ahlaaha',
-        dateLimit: new Date('2024-06-10'),
-        isFinished:false,
-        status:STATUS.PENDING
-      } 
-      const task2 : Task ={
-        title:'Hacer proyecto',
-        description:'TODO LIST',
-        dateLimit: new Date('2024-06-10'),
-        isFinished:false,
-        status:STATUS.PENDING
-      } 
-      const task3 : Task ={
-        title:'Avanzar en proyecto',
-        description:'TODO LIST',
-        dateLimit: new Date('2024-06-14'),
-        isFinished:false,
-        status:STATUS.PENDING
-      } 
-    
-     
-      /*
-       useEffect(() => {
-        // Guardar las tareas iniciales en el localStorage cuando el componente se monta por primera vez
-       //localStorage.setItem("tasks", JSON.stringify([task1, task2, task3]));
-        
-        // También puedes cargar las tareas del localStorage
- 
-        const savedTasks = localStorage.getItem("tasks");
-        if (savedTasks) {
-          setTasks(JSON.parse(savedTasks));
-        }
-      }, []);*/
+    const { tasks, setTasks} = props
+
        
       const handleDeleteTasks = (id:string) => {
       

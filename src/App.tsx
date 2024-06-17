@@ -18,8 +18,8 @@ function App() {
     setTasks(storedTasks);
 }, []);
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const onSaveTask = (newTask: { id: any; titulo: any; descripcion: any; date: string | number | Date; }) => {
+
+const onSaveTask = (newTask: { id: string; titulo: string; descripcion: string; date: string | number | Date; }) => {
     const task : Task = {
       id:newTask.id,
       title:newTask.titulo,
