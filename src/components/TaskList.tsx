@@ -32,6 +32,17 @@ export function TaskList( props: {status:string, tasks:Task[], setTasks:(tasks:T
         localStorage.setItem("tasks", JSON.stringify(updatedTasks));
       }
 
+      const handleFinishTask = (id : string) => {
+        const updatedTasks = tasks.map(task => {
+          if (task.id === id) {
+              return { ...task, status: STATUS.FINISHED }; // Actualiza el status de la tarea
+          }
+          return task;
+        });
+        setTasks(updatedTasks);
+        localStorage.setItem("tasks", JSON.stringify(updatedTasks)); 
+      }
+
 
       
     const filteredTasks = tasks.filter( task => 
@@ -58,7 +69,7 @@ export function TaskList( props: {status:string, tasks:Task[], setTasks:(tasks:T
         <h2 className="list-title" >{title} </h2>
         {filteredTasks.map ( e =>
     
-            <TaskComponent key={e.id} taskId ={e.id} task={e} onDelete={handleDeleteTasks} onPlay={handlePlayTask}></TaskComponent>
+            <TaskComponent key={e.id} taskId ={e.id} task={e} onDelete={handleDeleteTasks} onPlay={handlePlayTask} onFinish={handleFinishTask}></TaskComponent>
         )}
        </div>
 }
