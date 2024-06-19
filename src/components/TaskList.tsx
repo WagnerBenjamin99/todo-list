@@ -43,6 +43,18 @@ export function TaskList( props: {status:string, tasks:Task[], setTasks:(tasks:T
         localStorage.setItem("tasks", JSON.stringify(updatedTasks)); 
       }
 
+      const handleSaveTask = (id:string, updatedTask:Task) => {
+        console.log('ACAAAA', id, updatedTask)
+        const oldTask = tasks.find(task => task.id === id)
+        const index = tasks.indexOf(oldTask!);
+        tasks[index] = updatedTask;
+        const updatedTasks = [...tasks];
+        updatedTasks[index] = updatedTask;
+  
+        setTasks(updatedTasks);
+        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+      } 
+
 
       
     const filteredTasks = tasks.filter( task => 
@@ -69,7 +81,7 @@ export function TaskList( props: {status:string, tasks:Task[], setTasks:(tasks:T
         <h2 className="list-title" >{title} </h2>
         {filteredTasks.map ( e =>
     
-            <TaskComponent key={e.id} taskId ={e.id} task={e} onDelete={handleDeleteTasks} onPlay={handlePlayTask} onFinish={handleFinishTask}></TaskComponent>
+            <TaskComponent key={e.id} taskId ={e.id} task={e} onDelete={handleDeleteTasks} onPlay={handlePlayTask} onFinish={handleFinishTask} onSave={handleSaveTask}></TaskComponent>
         )}
        </div>
 }

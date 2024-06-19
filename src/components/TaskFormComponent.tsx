@@ -5,13 +5,14 @@ import { v4 as uuid } from 'uuid';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { CloseButtonComponent } from './CloseButtonComponent';
 
-export function TaskFormComponent(props : {onSaveTask: (arg0: { id: string; titulo: string; descripcion: string; date: string; status: STATUS; }) => void}) {
+export function TaskFormComponent(props : {onSaveTask: (arg0: { id: string; titulo: string; descripcion: string; date: string; status: STATUS; isEditing:boolean }) => void}) {
     const [formValues, setFormValues] = useState({
         id:uuid(),
         titulo: '',
         descripcion: '',
         date: '',
-        status:STATUS.PENDING
+        status:STATUS.PENDING,
+        isEditing:false
     });
 
     const [iconClassName, setIconClassName] = useState('open-form-btn');
@@ -26,7 +27,7 @@ export function TaskFormComponent(props : {onSaveTask: (arg0: { id: string; titu
    
     const handleDateChange = (event: { target: { name: string; value: string; }; }) => {
         const { name, value } = event.target;
-        setFormValues({ ...formValues, [name]: value });
+        setFormValues({ ...formValues, [name]: value})
     };
 
     const handleSubmit = (event: { preventDefault: () => void; }) => {
@@ -37,7 +38,8 @@ export function TaskFormComponent(props : {onSaveTask: (arg0: { id: string; titu
           titulo: '',
           descripcion: '',
           date: '',
-          status:STATUS.PENDING
+          status:STATUS.PENDING,
+          isEditing:false
         })
 
      };
@@ -80,6 +82,7 @@ export function TaskFormComponent(props : {onSaveTask: (arg0: { id: string; titu
                     fullWidth
                     value={formValues.titulo}
                     onChange={handleInputChange}
+                    required
                 />
                 <TextField
                     id="descripcion"
@@ -89,9 +92,10 @@ export function TaskFormComponent(props : {onSaveTask: (arg0: { id: string; titu
                     fullWidth
                     value={formValues.descripcion}
                     onChange={handleInputChange}
+                    
                 />
                 <TextField
-                    type="date"
+                    type="datetime-local"
                     id="fecha"
                     name="date"
                     label="Fecha limite"
@@ -99,6 +103,7 @@ export function TaskFormComponent(props : {onSaveTask: (arg0: { id: string; titu
                     fullWidth
                     value={formValues.date}
                     onChange={handleDateChange}
+                    required
                 />
                 <Button type="submit" variant="contained" color="success">
                     Agregar

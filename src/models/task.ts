@@ -6,6 +6,7 @@ export interface Task {
     description : string,
     dateLimit : Date,
     status: STATUS,
-    isFinished : boolean
+    isFinished : boolean,
+    isEditing : boolean
 
 }
