@@ -2,13 +2,37 @@
 import { Task } from "../models/task";
 import { TaskComponent } from "./TaskComponent";
 import {STATUS} from '../models/STATUS'
+import { useDrop } from "react-dnd";
+import { ItemTypes } from "../utils/ItemTypes";
 
 export function TaskList( props: {status:string, tasks:Task[], setTasks:(tasks:Task[])=>void }){
 
 
     const { tasks, setTasks} = props
 
-       
+    const [, drop] = useDrop({
+      accept: ItemTypes.TASK, 
+      drop: (item : Task) => {
+        if (props.status === 'inProgress') handlePlayTask(item.id);
+        else if (props.status === 'pending') handleCreateTask(item.id)
+        else handleFinishTask(item.id)
+      },
+      collect: (monitor) => ({
+        isOver: !!monitor.isOver(),
+      }),
+    });
+
+      const handleCreateTask = (id:string) => {
+        const updatedTasks = tasks.map(task => {
+          if (task.id === id) {
+              return { ...task, status: STATUS.PENDING }; 
+          }
+          return task;
+        });
+        setTasks(updatedTasks);
+        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+      }      
+
       const handleDeleteTasks = (id:string) => {
       
         const updatedTasks = tasks.filter(task => task.id !== id);
@@ -24,7 +48,7 @@ export function TaskList( props: {status:string, tasks:Task[], setTasks:(tasks:T
 
         const updatedTasks = tasks.map(task => {
             if (task.id === id) {
-                return { ...task, status: STATUS.INPROGRESS }; // Actualiza el status de la tarea
+                return { ...task, status: STATUS.INPROGRESS }; 
             }
             return task;
         });
@@ -35,7 +59,7 @@ export function TaskList( props: {status:string, tasks:Task[], setTasks:(tasks:T
       const handleFinishTask = (id : string) => {
         const updatedTasks = tasks.map(task => {
           if (task.id === id) {
-              return { ...task, status: STATUS.FINISHED }; // Actualiza el status de la tarea
+              return { ...task, status: STATUS.FINISHED }; 
           }
           return task;
         });
@@ -73,11 +97,11 @@ export function TaskList( props: {status:string, tasks:Task[], setTasks:(tasks:T
         className += ' pending-tasks'
         title = 'Tareas pendientes'
     }
-    console.log(filteredTasks)
+   
     
 
 
-    return <div className={className}>
+    return <div className={className} ref={drop}>
         <h2 className="list-title" >{title} </h2>
         {filteredTasks.map ( e =>
     

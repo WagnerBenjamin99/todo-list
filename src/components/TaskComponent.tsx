@@ -12,6 +12,8 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
 import { TextField, Button } from "@mui/material";
 import { useState } from "react";
+import { useDrag } from 'react-dnd';
+
 
 export function TaskComponent(props: { task: Task, taskId: string, onDelete: (id: string) => void, onPlay: (id: string) => void, onFinish: (id: string) => void, onSave: (id: string, updatedTask: Task) => void }) {
 
@@ -69,6 +71,14 @@ export function TaskComponent(props: { task: Task, taskId: string, onDelete: (id
     onSave(taskId, updatedTask);
     setEditing(false);
   }
+
+  const [{ isDragging }, drag] = useDrag({
+    type: 'TASK' as const,
+    item: { id: taskId },
+    collect: (monitor: { isDragging: () => unknown; }) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  });
 
   const card = (
     <React.Fragment>
@@ -159,7 +169,7 @@ export function TaskComponent(props: { task: Task, taskId: string, onDelete: (id
   );
 
   return (
-    <Box sx={{ minWidth: 275 }}>
+    <Box ref={drag} sx={{ minWidth: 275 }} style={{ opacity: isDragging ? 0.5 : 1, cursor: 'move' }}>
       {editing?
       <Card variant="outlined" sx={{ borderRadius: '20px', height:250 }} className="task-card" >{card}</Card>
       :
@@ -169,3 +179,4 @@ export function TaskComponent(props: { task: Task, taskId: string, onDelete: (id
     </Box>
   );
 }
+
