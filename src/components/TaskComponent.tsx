@@ -1,4 +1,4 @@
-import { Task } from "./models/task";
+import { Task } from "../models/task";
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -126,14 +126,14 @@ export function TaskComponent(props: { task: Task, taskId: string, onDelete: (id
                   {`Fecha limite: ${formatDate(new Date(task.dateLimit))}`}
               
                 </Typography>
-                <Typography variant="body2">
+                <Typography variant="body1" sx={{ whiteSpace: 'pre-wrap', maxWidth:'210px', textWrap:'wrap', wordWrap:'break-word' }}>
                   {task.description}
                 </Typography>
               </div>
             </Box>
           </CardContent>
           <CardActions sx={{ justifyContent: 'flex-end' }}>
-            <div className="actions">
+            <div className="actions" >
               {task.status === 'pending' ?
                 <button className="btn-functions" onClick={playTask}>
                   <PlayArrowIcon sx={{ mr: 0.5, backgroundColor: "#77dd77", borderRadius: 5, padding: 1, color: "black", height: 20, width: 20, marginRight: 3 }} />

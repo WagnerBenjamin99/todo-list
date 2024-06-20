@@ -1,6 +1,6 @@
 
 import { Task } from "../models/task";
-import { TaskComponent } from "../TaskComponent";
+import { TaskComponent } from "./TaskComponent";
 import {STATUS} from '../models/STATUS'
 
 export function TaskList( props: {status:string, tasks:Task[], setTasks:(tasks:Task[])=>void }){

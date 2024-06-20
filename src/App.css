@@ -27,14 +27,14 @@ header{
   font-size: 25px;
   z-index: 1;
   position: absolute;
-
 }
+
 .task-card{
   
-  height: 200px;
+  min-height: 200px;
   margin-bottom: 20px;
-  
 }
+
 .finished{
   color: green;
 }
@@ -57,33 +57,27 @@ header{
   justify-content: space-around;
   min-height: 85vh;
   height: fit-content;
-  width: 20%;
   min-width: 275px;
   padding: 30px;
   border-radius: 20px;
-
-
 }
 
-.pending-tasks{
 
-  background-color: #ff6961;
+.list-title{
+  justify-self:start;
+  align-self: center; 
+}
+.pending-tasks{
   background-color: #ff9e8e;
-  
 }
 .inProgress-tasks{
   background-color: #84b6f4;
 } 
-.list-title{
-  
-  justify-self:start;
-  align-self: center;
-  
-}
 
 .completed-tasks{
   background-color: #77dd77;
 }
+
 
 .btn-functions{
   padding: 0;
