@@ -4,11 +4,13 @@ import { TaskComponent } from "./TaskComponent";
 import {STATUS} from '../models/STATUS'
 import { useDrop } from "react-dnd";
 import { ItemTypes } from "../utils/ItemTypes";
+import { useState } from "react";
 
 export function TaskList( props: {status:string, tasks:Task[], setTasks:(tasks:Task[])=>void }){
 
 
     const { tasks, setTasks} = props
+    const [isDragging, setIsDragging] = useState(false);
 
     const [, drop] = useDrop({
       accept: ItemTypes.TASK, 
@@ -79,6 +81,10 @@ export function TaskList( props: {status:string, tasks:Task[], setTasks:(tasks:T
         localStorage.setItem("tasks", JSON.stringify(updatedTasks));
       } 
 
+     const  handleDragging = (isDragging : boolean) => {
+      setIsDragging(isDragging)
+     }
+
 
       
     const filteredTasks = tasks.filter( task => 
@@ -101,11 +107,11 @@ export function TaskList( props: {status:string, tasks:Task[], setTasks:(tasks:T
     
 
 
-    return <div className={className} ref={drop}>
+    return <div className={className} ref={drop} style={{overflow: isDragging ? 'hidden' : 'initial'} }>
         <h2 className="list-title" >{title} </h2>
         {filteredTasks.map ( e =>
     
-            <TaskComponent key={e.id} taskId ={e.id} task={e} onDelete={handleDeleteTasks} onPlay={handlePlayTask} onFinish={handleFinishTask} onSave={handleSaveTask}></TaskComponent>
+            <TaskComponent key={e.id} taskId ={e.id} task={e} onDelete={handleDeleteTasks} onPlay={handlePlayTask} onFinish={handleFinishTask} onSave={handleSaveTask} onDragging={handleDragging}></TaskComponent>
         )}
        </div>
 }

@@ -11,11 +11,11 @@ import { DeleteRounded } from "@mui/icons-material";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
 import { TextField, Button } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDrag } from 'react-dnd';
 
 
-export function TaskComponent(props: { task: Task, taskId: string, onDelete: (id: string) => void, onPlay: (id: string) => void, onFinish: (id: string) => void, onSave: (id: string, updatedTask: Task) => void }) {
+export function TaskComponent(props: { task: Task, taskId: string, onDelete: (id: string) => void, onPlay: (id: string) => void, onFinish: (id: string) => void, onSave: (id: string, updatedTask: Task) => void, onDragging: (isDragging:boolean) => void }) {
 
   const { task, taskId, onDelete, onPlay, onFinish, onSave } = props;
   const [editing, setEditing] = useState(false);
@@ -55,6 +55,7 @@ export function TaskComponent(props: { task: Task, taskId: string, onDelete: (id
     setEditing(false)
   }
 
+  
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormValues({ ...formValues, [name]: value });
@@ -77,9 +78,23 @@ export function TaskComponent(props: { task: Task, taskId: string, onDelete: (id
     item: { id: taskId },
     collect: (monitor: { isDragging: () => unknown; }) => ({
       isDragging: !!monitor.isDragging(),
+  
+      
     }),
+  
   });
 
+  useEffect(() => {
+    // Manejar el comportamiento de desplazamiento del body
+    if (isDragging) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    // Informar que se está arrastrando
+    props.onDragging(isDragging);
+  }, [isDragging]);
+ 
   const card = (
     <React.Fragment>
       {editing ? (
@@ -169,7 +184,7 @@ export function TaskComponent(props: { task: Task, taskId: string, onDelete: (id
   );
 
   return (
-    <Box ref={drag} sx={{ minWidth: 275 }} style={{ opacity: isDragging ? 0.5 : 1, cursor: 'move' }}>
+    <Box ref={drag} sx={{ minWidth: 275 }} style={{ opacity: isDragging ? 0.5 : 1, cursor: 'move' }}  >
       {editing?
       <Card variant="outlined" sx={{ borderRadius: '20px', height:250 }} className="task-card" >{card}</Card>
       :

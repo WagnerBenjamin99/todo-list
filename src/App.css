@@ -33,6 +33,10 @@ header{
   
   min-height: 200px;
   margin-bottom: 20px;
+  user-select: none; /* Evita la selección de texto en navegadores que lo soportan */
+  -webkit-user-select: none; /* Para navegadores WebKit (Safari, Chrome) */
+  -moz-user-select: none; /* Para navegadores Firefox */
+  -ms-user-select: none;
 }
 
 .finished{
@@ -185,6 +189,8 @@ header{
   transform: skewY(1deg);
   transform-origin: top right;
 }
+
+
 @media screen and (max-width: 1055px) {
   .task-list{
     margin: 10px;

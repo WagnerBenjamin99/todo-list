@@ -5,6 +5,8 @@ import { Task } from './models/task.ts';
 import {TaskFormComponent} from './components/TaskFormComponent.tsx'
 import { STATUS } from './models/STATUS.ts';
 import { HeaderComponent } from './components/HeaderComponent.tsx';
+import { TouchBackend } from 'react-dnd-touch-backend';
+import { DndProvider } from 'react-dnd';
 
 function App() {
 
@@ -35,21 +37,28 @@ const onSaveTask = (newTask: { id: string; titulo: string; descripcion: string; 
 };
 
 
+    const backendOptions = {
+      enableTouchEvents: true,  
+      enableMouseEvents: true, 
+    };
+
   return (
     
-        
-        <section className='app'>
-          <HeaderComponent></HeaderComponent>  
-          <div className="form-container">
-            <TaskFormComponent onSaveTask={onSaveTask}></TaskFormComponent>
-          </div>
-          <div className="tasks-container">
-          <TaskList status='pending' tasks={tasks} setTasks={setTasks} ></TaskList>
-          <TaskList status='inProgress' tasks={tasks} setTasks={setTasks} ></TaskList>
-          <TaskList status='finished' tasks={tasks} setTasks={setTasks} ></TaskList>
-          </div>
+        <DndProvider backend={TouchBackend} options={backendOptions}>
+          <section className='app'>
+            <HeaderComponent></HeaderComponent>  
+            <div className="form-container">
+              <TaskFormComponent onSaveTask={onSaveTask}></TaskFormComponent>
+            </div>
+            <div className="tasks-container">
+            <TaskList status='pending' tasks={tasks} setTasks={setTasks} ></TaskList>
+            <TaskList status='inProgress' tasks={tasks} setTasks={setTasks} ></TaskList>
+            <TaskList status='finished' tasks={tasks} setTasks={setTasks} ></TaskList>
+            </div>
      
-      </section>
+           </section>
+        </DndProvider>
+        
 
     
   )
